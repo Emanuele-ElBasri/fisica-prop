@@ -6,7 +6,7 @@
     <title>Laboratorio di Proporzionalità</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap');
         
         * {
             margin: 0;
@@ -15,9 +15,13 @@
         }
         
         body {
-            font-family: 'Crimson Text', serif;
-            background: linear-gradient(135deg, #1a0f0a 0%, #3d2817 50%, #1a0f0a 100%);
-            color: #e8d4b0;
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(101, 67, 33, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(101, 67, 33, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(139, 90, 43, 0.05) 0%, transparent 60%),
+                linear-gradient(135deg, #f4e4c1 0%, #e8d4b0 25%, #d9bc8c 50%, #e8d4b0 75%, #f4e4c1 100%);
+            color: #4a3020;
             min-height: 100vh;
             padding: 20px;
             position: relative;
@@ -32,9 +36,10 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.03) 0%, transparent 50%);
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(101, 67, 33, 0.03) 1px, rgba(101, 67, 33, 0.03) 2px),
+                repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(101, 67, 33, 0.02) 1px, rgba(101, 67, 33, 0.02) 2px);
             pointer-events: none;
+            z-index: 0;
         }
         
         body::after {
@@ -44,150 +49,200 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 3px,
-                    rgba(232, 212, 176, 0.02) 3px,
-                    rgba(232, 212, 176, 0.02) 6px
-                );
+            background-image: 
+                radial-gradient(ellipse at 10% 15%, rgba(139, 90, 43, 0.08) 0%, transparent 30%),
+                radial-gradient(ellipse at 90% 85%, rgba(160, 120, 70, 0.06) 0%, transparent 25%),
+                radial-gradient(ellipse at 30% 70%, rgba(139, 90, 43, 0.05) 0%, transparent 20%),
+                radial-gradient(ellipse at 70% 30%, rgba(160, 120, 70, 0.07) 0%, transparent 25%);
             pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ingranaggi animati */
+        .gear {
+            position: fixed;
+            color: rgba(139, 90, 43, 0.15);
+            font-size: 120px;
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .gear1 { top: 5%; left: 3%; animation-duration: 25s; }
+        .gear2 { top: 60%; right: 5%; font-size: 150px; animation-duration: 30s; animation-direction: reverse; }
+        .gear3 { bottom: 10%; left: 8%; font-size: 90px; animation-duration: 20s; animation-direction: reverse; }
+        .gear4 { top: 30%; right: 15%; font-size: 70px; animation-duration: 18s; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
         .container {
             max-width: 1000px;
-            margin: 0 auto;
-            background: linear-gradient(180deg, rgba(58, 38, 24, 0.95) 0%, rgba(40, 26, 16, 0.95) 100%);
-            border: 6px double #b8956a;
-            border-radius: 15px;
-            padding: 40px;
+            margin: 40px auto;
+            background: linear-gradient(135deg, rgba(232, 212, 176, 0.95) 0%, rgba(217, 188, 140, 0.95) 100%);
+            border: 6px solid #8b5a2b;
             box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(232, 212, 176, 0.2),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+                0 0 0 2px #654321,
+                0 0 0 4px #8b5a2b,
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 0 100px rgba(139, 90, 43, 0.08);
+            padding: 50px 40px;
             position: relative;
+            z-index: 1;
         }
-        
-        .container::before,
-        .container::after {
+
+        /* Rivetti decorativi */
+        .rivet {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #8b6914 0%, #5d4610 100%);
+            border-radius: 50%;
+            border: 2px solid #654321;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .rivet::before, .rivet::after {
             content: '';
             position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 3px solid #b8956a;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 2px;
+            background: #654321;
         }
-        
-        .container::before {
-            top: 15px;
-            left: 15px;
-            border-right: none;
-            border-bottom: none;
+
+        .rivet::before { transform: translate(-50%, -50%); }
+        .rivet::after { transform: translate(-50%, -50%) rotate(90deg); }
+
+        .rivet-tl { top: 25px; left: 25px; }
+        .rivet-tr { top: 25px; right: 25px; }
+        .rivet-bl { bottom: 25px; left: 25px; }
+        .rivet-br { bottom: 25px; right: 25px; }
+
+        /* Strisce metalliche */
+        .metal-strip {
+            position: absolute;
+            background: linear-gradient(90deg, #8b6914 0%, #b8860b 50%, #8b6914 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
         }
-        
-        .container::after {
-            bottom: 15px;
-            right: 15px;
-            border-left: none;
-            border-top: none;
+
+        .metal-strip-top { top: 0; left: 0; right: 0; height: 6px; }
+        .metal-strip-bottom { bottom: 0; left: 0; right: 0; height: 6px; }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 4px solid #8b5a2b;
+            box-shadow: 0 2px 0 rgba(139, 90, 43, 0.3);
         }
         
         h1 {
             font-family: 'IM Fell English', serif;
             text-align: center;
-            color: #f4e4c1;
-            font-size: 3em;
+            color: #4a3020;
+            font-size: 2.8em;
             margin-bottom: 10px;
-            text-shadow: 
-                2px 2px 4px rgba(0,0,0,0.9),
-                0 0 20px rgba(244, 228, 193, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 0 0 20px rgba(139, 90, 43, 0.2);
+            font-style: italic;
             letter-spacing: 3px;
-            /*font-style: italic;*/
         }
+
+        h1::before { content: '⚙ '; font-style: normal; color: #8b5a2b; }
+        h1::after { content: ' ⚙'; font-style: normal; color: #8b5a2b; }
         
         .subtitle {
-            text-align: center;
-            color: #c9a871;
-            margin-bottom: 35px;
             font-size: 1.1em;
-            font-family: 'Libre Baskerville', serif;
-            letter-spacing: 2px;
+            color: #6d4a2a;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        h3 {
+            font-family: 'IM Fell English', serif;
+            color: #4a3020;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #8b5a2b;
+            padding-bottom: 8px;
         }
         
+        /* Tabella dati */
         .data-table {
             width: 100%;
             margin: 25px 0;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: rgba(26, 15, 10, 0.6);
-            border: 3px solid #8b7355;
-            border-radius: 8px;
+            border-collapse: collapse;
+            background: rgba(255, 248, 230, 0.8);
+            border: 2px solid #8b5a2b;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
         }
         
         .data-table th {
-            background: linear-gradient(180deg, #6d5d4b 0%, #4a3d2f 100%);
-            color: #f4e4c1;
+            background: rgba(139, 90, 43, 0.2);
+            color: #4a3020;
             padding: 15px;
             font-weight: bold;
-            font-size: 1.3em;
-            border-bottom: 3px solid #b8956a;
-            font-family: 'Libre Baskerville', serif;
+            font-size: 1.2em;
+            font-family: 'IM Fell English', serif;
+            border: 1px solid #a0774a;
         }
         
         .data-table td {
             padding: 12px;
             text-align: center;
-            border-bottom: 1px solid #6d5d4b;
-            color: #e8d4b0;
-            font-size: 1.2em;
+            border: 1px solid #a0774a;
+            color: #5d4610;
+            font-size: 1.1em;
         }
-        
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-        
+
         .data-table tr:nth-child(even) {
-            background: rgba(139, 115, 85, 0.1);
+            background: rgba(139, 90, 43, 0.06);
         }
         
+        /* Sezioni input */
         .input-group {
-            margin: 30px 0;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(58, 38, 24, 0.4) 0%, rgba(40, 26, 16, 0.4) 100%);
-            border: 2px solid #8b7355;
-            border-radius: 8px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 248, 230, 0.5);
+            border: 2px solid #a0774a;
+            border-radius: 6px;
         }
         
         label {
             display: block;
             margin-bottom: 10px;
-            color: #f4e4c1;
-            font-weight: 600;
-            font-size: 1.2em;
-            font-family: 'Libre Baskerville', serif;
-        }
-        
-        select, input {
-            width: 100%;
-            padding: 14px;
-            background: rgba(26, 15, 10, 0.9);
-            border: 2px solid #8b7355;
-            border-radius: 6px;
-            color: #e8d4b0;
-            font-family: 'Crimson Text', serif;
+            color: #4a3020;
+            font-weight: bold;
             font-size: 1.1em;
+            font-family: 'Courier Prime', monospace;
         }
         
-        select:focus, input:focus {
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b5a2b;
+            border-radius: 4px;
+            color: #3d2817;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+        }
+        
+        select:focus, input[type="number"]:focus {
             outline: none;
-            border-color: #c9a871;
-            box-shadow: 0 0 15px rgba(201, 168, 113, 0.3);
-            background: rgba(26, 15, 10, 1);
+            border-color: #b8860b;
+            box-shadow: 0 0 5px rgba(184, 134, 11, 0.5);
         }
+
+        select { cursor: pointer; }
         
+        /* Gruppo pulsanti */
         .button-group {
             display: flex;
             gap: 20px;
@@ -198,117 +253,118 @@
         button {
             flex: 1;
             min-width: 150px;
-            padding: 16px 30px;
-            background: linear-gradient(180deg, #6d5d4b 0%, #4a3d2f 100%);
-            border: 3px solid #b8956a;
-            border-radius: 8px;
-            color: #f4e4c1;
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1.1em;
-            font-weight: bold;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b6914 0%, #b8860b 50%, #8b6914 100%);
+            border: 3px solid #654321;
+            border-radius: 6px;
+            color: #fff;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.95em;
             cursor: pointer;
-            transition: all 0.3s;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-            box-shadow: 
-                0 5px 15px rgba(0,0,0,0.4),
-                inset 0 1px 0 rgba(232, 212, 176, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.2s;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         button:hover {
-            background: linear-gradient(180deg, #8b7355 0%, #6d5d4b 100%);
-            transform: translateY(-3px);
-            box-shadow: 
-                0 8px 20px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(232, 212, 176, 0.3);
+            background: linear-gradient(135deg, #a07915 0%, #d4a520 50%, #a07915 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
         
         button:active {
             transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
+        /* Messaggi feedback */
         .message {
-            padding: 25px;
+            padding: 15px;
             margin: 25px 0;
-            border-radius: 8px;
-            font-size: 1.2em;
+            border-radius: 6px;
+            font-size: 1.1em;
             text-align: center;
             display: none;
-            border: 3px solid;
-            font-family: 'Libre Baskerville', serif;
+            border: 2px solid;
+            font-family: 'Courier Prime', monospace;
+            font-weight: bold;
         }
         
-        .success {
-            background: linear-gradient(135deg, rgba(34, 139, 34, 0.15) 0%, rgba(34, 139, 34, 0.25) 100%);
-            color: #98FB98;
-            border-color: #2E7D32;
+        .message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+            color: #2e7d32;
         }
         
-        .error {
-            background: linear-gradient(135deg, rgba(139, 0, 0, 0.15) 0%, rgba(139, 0, 0, 0.25) 100%);
-            color: #FFB6B6;
-            border-color: #C62828;
+        .message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+            color: #c62828;
         }
         
+        /* Contenitore grafico */
         #chartContainer {
-            margin: 35px 0;
-            padding: 25px;
-            background: rgba(26, 15, 10, 0.6);
-            border: 3px solid #8b7355;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 248, 230, 0.6) 0%, rgba(245, 235, 210, 0.6) 100%);
+            border: 4px solid #8b5a2b;
             border-radius: 8px;
             display: none;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         
         canvas {
-            background: rgba(232, 212, 176, 0.03);
-            border-radius: 6px;
+            border: 2px solid #a0774a;
+            border-radius: 4px;
+            background: rgba(255, 250, 240, 0.9);
         }
-        
-        .gear {
-            position: fixed;
-            color: rgba(184, 149, 106, 0.08);
-            font-size: 150px;
-            animation: rotate 30s linear infinite;
-            pointer-events: none;
-            z-index: -1;
-            filter: drop-shadow(0 0 10px rgba(184, 149, 106, 0.2));
-        }
-        
-        .gear1 { top: 5%; left: -3%; animation-duration: 40s; }
-        .gear2 { top: 60%; right: -3%; animation-duration: 35s; animation-direction: reverse; }
-        .gear3 { bottom: 10%; left: 10%; font-size: 100px; animation-duration: 45s; }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        h3 {
-            font-family: 'Libre Baskerville', serif;
-            color: #f4e4c1;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            letter-spacing: 1px;
-        }
-        
-        @media (max-width: 768px) {
+
+        @media (max-width: 1024px) {
+            .container { padding: 30px 20px; }
             h1 { font-size: 2em; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px 15px; margin: 20px auto; }
+            h1 { font-size: 1.8em; }
+            .gear { font-size: 80px; }
             .button-group { flex-direction: column; }
             button { min-width: 100%; }
         }
-</style>
+    </style>
 </head>
 <body>
+    <!-- Ingranaggi animati -->
     <div class="gear gear1">⚙</div>
     <div class="gear gear2">⚙</div>
-    
+    <div class="gear gear3">⚙</div>
+    <div class="gear gear4">⚙</div>
+
     <div class="container">
-        <h1>⚙ Laboratorio di Proporzionalità ⚙</h1>
-        <p class="subtitle">Corso di Fisica - prof. El Basri Emanuele - I.C. "C. Puddu"</p>
+        <!-- Rivetti decorativi -->
+        <div class="rivet rivet-tl"></div>
+        <div class="rivet rivet-tr"></div>
+        <div class="rivet rivet-bl"></div>
+        <div class="rivet rivet-br"></div>
+
+        <!-- Strisce metalliche -->
+        <div class="metal-strip metal-strip-top"></div>
+        <div class="metal-strip metal-strip-bottom"></div>
+
+        <header>
+            <h1>Laboratorio di Proporzionalità</h1>
+            <p class="subtitle">I.C. "C.Puddu", Corso di Fisica - prof. El Basri</p>
+        </header>
         
         <div id="dataSection">
-            <h3 style="color: #d4af37; margin-bottom: 15px;">📊 Dati Sperimentali</h3>
+            <h3>📊 Dati Sperimentali</h3>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -364,62 +420,44 @@
         let chart = null;
         
         function generateNewData() {
-            // Reset UI
             document.getElementById('message').style.display = 'none';
             document.getElementById('retryButtons').style.display = 'none';
             document.getElementById('chartContainer').style.display = 'none';
             document.getElementById('proportionType').value = '';
             document.getElementById('constantK').value = '';
             
-            // Destroy existing chart
             if (chart) {
                 chart.destroy();
                 chart = null;
             }
             
-            // Choose random type
             const types = ['direct', 'directSquare', 'inverse', 'inverseSquare'];
             currentData.type = types[Math.floor(Math.random() * types.length)];
+            currentData.k = Math.round((Math.random() * 9 + 1) * 100) / 100;
             
-            // Generate random k
-            currentData.k = Math.round((Math.random() * 9 + 1) * 100) / 100; // Between 1 and 10, 2 decimals
-            
-            // Generate 5 data points
             currentData.points = [];
             for (let i = 0; i < 5; i++) {
-                let x = Math.round((Math.random() * 9 + 1) * 10) / 10; // Between 1 and 10
+                let x = Math.round((Math.random() * 9 + 1) * 10) / 10;
                 let y;
                 
                 switch(currentData.type) {
-                    case 'direct':
-                        y = currentData.k * x;
-                        break;
-                    case 'directSquare':
-                        y = currentData.k * x * x;
-                        break;
-                    case 'inverse':
-                        y = currentData.k / x;
-                        break;
-                    case 'inverseSquare':
-                        y = currentData.k / (x * x);
-                        break;
+                    case 'direct':        y = currentData.k * x; break;
+                    case 'directSquare':  y = currentData.k * x * x; break;
+                    case 'inverse':       y = currentData.k / x; break;
+                    case 'inverseSquare': y = currentData.k / (x * x); break;
                 }
                 
-                y = Math.round(y * 100) / 100; // Round to 2 decimals
+                y = Math.round(y * 100) / 100;
                 currentData.points.push({x, y});
             }
             
-            // Sort by x
             currentData.points.sort((a, b) => a.x - b.x);
-            
-            // Display data
             displayData();
         }
         
         function displayData() {
             const tbody = document.getElementById('dataTableBody');
             tbody.innerHTML = '';
-            
             currentData.points.forEach(point => {
                 const row = tbody.insertRow();
                 row.insertCell(0).textContent = point.x;
@@ -431,20 +469,10 @@
             const selectedType = document.getElementById('proportionType').value;
             const enteredK = parseFloat(document.getElementById('constantK').value);
             
-            if (!selectedType) {
-                showMessage('Seleziona un tipo di proporzionalità!', 'error');
-                return;
-            }
+            if (!selectedType) { showMessage('Seleziona un tipo di proporzionalità!', 'error'); return; }
+            if (isNaN(enteredK)) { showMessage('Inserisci un valore valido per k!', 'error'); return; }
             
-            if (isNaN(enteredK)) {
-                showMessage('Inserisci un valore valido per k!', 'error');
-                return;
-            }
-            
-            // Check if type is correct
             const typeCorrect = selectedType === currentData.type;
-            
-            // Check if k is approximately correct (tolerance 0.1)
             const kCorrect = Math.abs(enteredK - currentData.k) < 0.1;
             
             if (typeCorrect && kCorrect) {
@@ -455,7 +483,6 @@
                 let errorMsg = '❌ Risposta errata. ';
                 if (!typeCorrect) errorMsg += 'Il tipo di proporzionalità non è corretto. ';
                 if (!kCorrect) errorMsg += 'Il valore di k non è corretto. ';
-                
                 showMessage(errorMsg, 'error');
                 document.getElementById('retryButtons').style.display = 'flex';
             }
@@ -478,7 +505,6 @@
         function drawChart() {
             document.getElementById('chartContainer').style.display = 'block';
             
-            // Generate continuous curve points
             const minX = Math.min(...currentData.points.map(p => p.x));
             const maxX = Math.max(...currentData.points.map(p => p.x));
             const curvePoints = [];
@@ -486,27 +512,16 @@
             for (let x = minX; x <= maxX; x += (maxX - minX) / 100) {
                 let y;
                 switch(currentData.type) {
-                    case 'direct':
-                        y = currentData.k * x;
-                        break;
-                    case 'directSquare':
-                        y = currentData.k * x * x;
-                        break;
-                    case 'inverse':
-                        y = currentData.k / x;
-                        break;
-                    case 'inverseSquare':
-                        y = currentData.k / (x * x);
-                        break;
+                    case 'direct':        y = currentData.k * x; break;
+                    case 'directSquare':  y = currentData.k * x * x; break;
+                    case 'inverse':       y = currentData.k / x; break;
+                    case 'inverseSquare': y = currentData.k / (x * x); break;
                 }
                 curvePoints.push({x, y});
             }
             
             const ctx = document.getElementById('chart').getContext('2d');
-            
-            if (chart) {
-                chart.destroy();
-            }
+            if (chart) chart.destroy();
             
             chart = new Chart(ctx, {
                 type: 'scatter',
@@ -515,8 +530,8 @@
                         {
                             label: 'Punti misurati',
                             data: currentData.points,
-                            backgroundColor: '#d4af37',
-                            borderColor: '#d4af37',
+                            backgroundColor: '#d4a520',
+                            borderColor: '#8b6914',
                             pointRadius: 8,
                             pointHoverRadius: 10
                         },
@@ -524,8 +539,8 @@
                             label: 'Curva teorica',
                             data: curvePoints,
                             type: 'line',
-                            borderColor: '#90EE90',
-                            borderWidth: 2,
+                            borderColor: '#8b5a2b',
+                            borderWidth: 2.5,
                             fill: false,
                             pointRadius: 0
                         }
@@ -536,58 +551,28 @@
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#d4af37',
-                                font: {
-                                    family: 'Special Elite',
-                                    size: 14
-                                }
+                                color: '#4a3020',
+                                font: { family: 'Courier Prime', size: 14 }
                             }
                         },
                         title: {
                             display: true,
                             text: getChartTitle(),
-                            color: '#d4af37',
-                            font: {
-                                family: 'Cinzel',
-                                size: 18
-                            }
+                            color: '#4a3020',
+                            font: { family: 'IM Fell English', size: 18 }
                         }
                     },
                     scales: {
                         x: {
                             type: 'linear',
-                            title: {
-                                display: true,
-                                text: 'x',
-                                color: '#d4af37',
-                                font: {
-                                    family: 'Special Elite',
-                                    size: 14
-                                }
-                            },
-                            ticks: {
-                                color: '#d4af37'
-                            },
-                            grid: {
-                                color: 'rgba(139, 105, 20, 0.2)'
-                            }
+                            title: { display: true, text: 'x', color: '#654321', font: { family: 'Courier Prime', size: 14 } },
+                            ticks: { color: '#654321' },
+                            grid: { color: 'rgba(139, 90, 43, 0.2)' }
                         },
                         y: {
-                            title: {
-                                display: true,
-                                text: 'y',
-                                color: '#d4af37',
-                                font: {
-                                    family: 'Special Elite',
-                                    size: 14
-                                }
-                            },
-                            ticks: {
-                                color: '#d4af37'
-                            },
-                            grid: {
-                                color: 'rgba(139, 105, 20, 0.2)'
-                            }
+                            title: { display: true, text: 'y', color: '#654321', font: { family: 'Courier Prime', size: 14 } },
+                            ticks: { color: '#654321' },
+                            grid: { color: 'rgba(139, 90, 43, 0.2)' }
                         }
                     }
                 }
@@ -597,20 +582,14 @@
         function getChartTitle() {
             const k = currentData.k.toFixed(2);
             switch(currentData.type) {
-                case 'direct':
-                    return `y = ${k}x`;
-                case 'directSquare':
-                    return `y = ${k}x²`;
-                case 'inverse':
-                    return `y = ${k}/x`;
-                case 'inverseSquare':
-                    return `y = ${k}/x²`;
+                case 'direct':        return `y = ${k}x`;
+                case 'directSquare':  return `y = ${k}x²`;
+                case 'inverse':       return `y = ${k}/x`;
+                case 'inverseSquare': return `y = ${k}/x²`;
             }
         }
         
-        // Generate initial data on page load
         window.onload = generateNewData;
     </script>
 </body>
-
 </html>
